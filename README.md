@@ -8,6 +8,8 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 	* Interfaces with the excellent [Knock App](http://www.knocktounlock.com) to more easily lock your Mac. I use this many times each day to replace the default `lock` command in Alfred with the Knock equivalent.
 - [Kill Process](https://github.com/ngreenstein/alfred-process-killer) (by [@ngreenstein](https://github.com/ngreenstein))
 	* Very handy way to quit applications, especially those that don't show up in the usual app-switcher (`Cmd-Tab`).
+- [Strip clipboard text formatting](https://github.com/notDavid/alfred-workflow-stripClipboardFormatting) (by [@notDavid](https://github.com/notDavid))
+	* I get really frustrated when I copy formatting along with text that I want to paste into an email, and I really didn't know that the `Cmd+Alt+Shift+V` keyboard shortcut existed until someone recently showed me, *plus* it's a pain to type and I hear it doesn't always work. Anyways, this workflow provides a quick way to strip formatting from the clipboard and paste it directly where your cursor has focus. Soooo handy!
 
 ## Programming
 
@@ -24,3 +26,5 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 - [Doing](https://github.com/EvanLovely/alfred--doing) (by [@EvanLovely](https://github.com/EvanLovely))
 	* Just recently saw a post from [@ttscoff](https://github.com/ttscoff) about [doing](https://github.com/ttscoff/doing), his CLI tool for time tracking and just keeping track of what he was last doing. For me, time tracking has become a bit of a chore because I forget what I did all day long, especially with the many interruptions at work. This workflow leverages the `doing` command to make it easier to keep a running log of what I was doing just now so that I can jog my memory later when I have to enter my time at work.
 	* _Note that I had to hack this workflow a bit to get it running with my non-system installed version of ruby. See [this issue logged to the workflow on GitHub](https://github.com/EvanLovely/alfred--doing/issues/1) for details._
+- [Slackfred](https://github.com/fspinillo/slackfred) (by [@fspinillo](https://github.com/fspinillo))
+	* Recently started using [Slack](https://slack.com) at work, and I really like it. This workflow provides the command `slk` to jump to a specific channel or DM a person, plus there are a number of other commands that I haven't tried yet to do other things like searching, setting your presence, and even clear unread messages. Cool!
