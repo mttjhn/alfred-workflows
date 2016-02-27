@@ -18,3 +18,9 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 	* Really handy when you need to figure out what something is in XML or URL encoding without having to look it up. Also does base64 encoding.
 - [Dash](https://github.com/Kapeli/Dash-Alfred-Workflow) (by [@Kapeli](https://github.com/Kapeli))
 	* The official Alfred workflow for the excellent [Dash](https://kapeli.com/dash), a very cool offline documentation tool for Mac OSX. I've found that the Alfred workflow sometimes it gets in the way of what I'm trying to do (e.g. Google something about `bash`, and instead Alfred starts searching Dash for documentation). Otherwise, a cool and handy workflow. Might want to look for something different because of the challenges mentioned above.
+
+## Productivity
+
+- [Doing](https://github.com/EvanLovely/alfred--doing) (by [@EvanLovely](https://github.com/EvanLovely))
+	* Just recently saw a post from [@ttscoff](https://github.com/ttscoff) about [doing](https://github.com/ttscoff/doing), his CLI tool for time tracking and just keeping track of what he was last doing. For me, time tracking has become a bit of a chore because I forget what I did all day long, especially with the many interruptions at work. This workflow leverages the `doing` command to make it easier to keep a running log of what I was doing just now so that I can jog my memory later when I have to enter my time at work.
+	* _Note that I had to hack this workflow a bit to get it running with my non-system installed version of ruby. See [this issue logged to the workflow on GitHub](https://github.com/EvanLovely/alfred--doing/issues/1) for details._
