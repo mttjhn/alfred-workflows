@@ -1,4 +1,4 @@
-Servers ([Download](https://raw.github.com/mttjhn/alfred-workflows/master/Other/Servers/Servers.alfredworkflow))
+Servers ([Download](https://raw.github.com/mttjhn/alfred-workflows/master/Workflows/Servers/Servers.alfredworkflow))
 =====================
 
 A quick way to connect to remote servers in macOS. I think I grabbed this workflow somewhere on [this Alfred thread](http://www.alfredforum.com/topic/180-connecting-to-remove-servers/), and what I've included here works great for my needs. I can't take any credit for this workflow; it was created by [@jdfwarrior](https://github.com/jdfwarrior) and uploaded to the Alfred forum. Just wanted a place where I could better link to the workflow file.
