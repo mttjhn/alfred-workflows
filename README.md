@@ -1,6 +1,6 @@
 Alfred Workflows
 =====================
-A listing of the Alfred workflows that I have collected for regular use, including a few that I have put together myself.  Maintained by [@mttjhn](https://github.com/mttjhn).
+A listing of the Alfred workflows that I have collected for regular use, including a few that I have put together myself. Maintained by [@mttjhn](https://github.com/mttjhn).
 
 ## Utilities
 
@@ -36,3 +36,8 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 - [Servers](https://github.com/mttjhn/alfred-workflows/tree/master/Other/Servers) (by [@jdfwarrior](https://github.com/jdfwarrior))
 	* Maintains a list of "bookmarks" to remote servers, allowing you to connect to servers by simply using a quick `srv` command. Very handy for those times when I need to quickly get to a project folder on the network at work.
 	* I still can't remember exactly where I found this one, but there isn't a repo on GitHub or some other site for it. I'm pretty sure it had something to do with [this Alfred thread](http://www.alfredforum.com/topic/180-connecting-to-remove-servers/). Just so that others can use it, I've uploaded the workflow and a description to this repository.
+
+## Media
+
+- [Rate iTunes Track](https://github.com/dklem/Alfred2-Rate-iTunes-Track) (by [@dklem](https://github.com/dklem))
+    * Recently, I've started making some smart playlists in iTunes to "rediscover" older music that I haven't listened to in a long time. Every so often I come across a track I like/dislike, and I want to rate that track without stopping what I'm doing. This handy Alfred workflow makes it simple. I just type `rate <number>` with the rating between 1-5, including half-stars (e.g. `rate 4.5`). A notification pops up to say that it rated the song with the given number of stars. Very nice.
