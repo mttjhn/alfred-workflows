@@ -19,4 +19,4 @@ Example:
 - `srv` - Brings up a list of the bookmarks I have created. If I choose one, it connects to the server and mounts the share as a volume. Holding `cmd` when selecting an item from the list will delete it from my "bookmarks".
 
 ## Credits
-- [@jdfwarrior](https://github.com/jdfwarrior)
+- [@jdfwarrior](https://github.com/jdfwarrior) created this and I can take no credit for his work. If he had this maintained on GitHub somewhere, I'd link there. :)
