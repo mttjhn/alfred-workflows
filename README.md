@@ -23,6 +23,8 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 	* Really handy when you need to figure out what something is in XML or URL encoding without having to look it up. Also does base64 encoding.
 - [Dash](https://github.com/Kapeli/Dash-Alfred-Workflow) (by [@Kapeli](https://github.com/Kapeli))
 	* The official Alfred workflow for the excellent [Dash](https://kapeli.com/dash), a very cool offline documentation tool for Mac OSX. I've found that the Alfred workflow sometimes it gets in the way of what I'm trying to do (e.g. Google something about `bash`, and instead Alfred starts searching Dash for documentation). Otherwise, a cool and handy workflow. Might want to look for something different because of the challenges mentioned above.
+- [Alfred Gist](https://github.com/phallstrom/AlfredGist) (by [@phallstrom](https://github.com/phallstrom))
+    * I like using [GitHub gists](https://help.github.com/articles/about-gists/) for sharing snippets of code with my coworkers/friends. This workflow makes it easy to use a file in Alfred (or from whatever code I have on my clipboard) to quickly create a GitHub Gist with a given name and file type. 
 
 ## Productivity
 
