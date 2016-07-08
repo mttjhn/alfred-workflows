@@ -38,6 +38,8 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 - [Servers](https://github.com/mttjhn/alfred-workflows/tree/master/Workflows/Servers) (by [@jdfwarrior](https://github.com/jdfwarrior))
 	* Maintains a list of "bookmarks" to remote servers, allowing you to connect to servers by simply using a quick `srv` command. Very handy for those times when I need to quickly get to a project folder on the network at work.
 	* I still can't remember exactly where I found this one, but there isn't a repo on GitHub or some other site for it. I'm pretty sure it had something to do with [this Alfred thread](http://www.alfredforum.com/topic/180-connecting-to-remove-servers/). Just so that others can use it, I've uploaded the workflow and a description to this repository.
+- [IssueTracker and TaskTracker Search](https://github.com/mttjhn/alfred-workflows/tree/master/Workflows/cx-issuetracker-tasktracker) (by [@mttjhn](https://github.com/mttjhn))
+    * After recently having to look up a bunch of Issues in my company's internal issue tracking system for a client project, I thought I'd make a quick workflow that navigates to a URL in order to search for an Issue by number. I added support for our task tracking system as well. For now, really simple, but there's room for some improvement.
 
 ## Media
 
