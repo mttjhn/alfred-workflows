@@ -12,6 +12,7 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 	* I get really frustrated when I copy formatting along with text that I want to paste into an email, and I really didn't know that the `Cmd+Alt+Shift+V` keyboard shortcut existed until someone recently showed me, *plus* it's a pain to type and I hear it doesn't always work. Anyways, this workflow provides a quick way to strip formatting from the clipboard and paste it directly where your cursor has focus. Soooo handy!
 - [Command-C App](https://github.com/mttjhn/alfred-commandc-workflow) (by [@mttjhn](https://github.com/mttjhn))
 	* I recently hacked together a quick workflow for the really cool [Command-C App](https://danilo.to), based primarily on [a workflow developed by Sayz Lim](http://sayzlim.net/command-c-alfred-workflow/). When the app isn't "spinning" (I think it's trying to find my iPhone), the workflow is great. I still would like to update it to allow for sending stuff to different devices, etc. But since I only have one iPhone, I think that can wait.
+	* __Update:__ now that Apple has effectively "sherlocked" Command-C with their new [Universal Clipboard](http://appleinsider.com/articles/16/06/15/universal-clipboard-for-macos-sierra-ios-10-streamlines-copypaste-between-devices) feature in macOS Sierra, this will probably hit the trash bin soon.
 
 ## Programming
 
