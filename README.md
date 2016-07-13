@@ -13,6 +13,8 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 - [Command-C App](https://github.com/mttjhn/alfred-commandc-workflow) (by [@mttjhn](https://github.com/mttjhn))
 	* I recently hacked together a quick workflow for the really cool [Command-C App](https://danilo.to), based primarily on [a workflow developed by Sayz Lim](http://sayzlim.net/command-c-alfred-workflow/). When the app isn't "spinning" (I think it's trying to find my iPhone), the workflow is great. I still would like to update it to allow for sending stuff to different devices, etc. But since I only have one iPhone, I think that can wait.
 	* __Update:__ now that Apple has effectively "sherlocked" Command-C with their new [Universal Clipboard](http://appleinsider.com/articles/16/06/15/universal-clipboard-for-macos-sierra-ios-10-streamlines-copypaste-between-devices) feature in macOS Sierra, this will probably hit the trash bin soon.
+- [Homebrew & Cask](https://github.com/fniephaus/alfred-homebrew) (by [@fniephaus](https://github.com/fniephaus))
+	* Just discovered this excellent Alfred workflow that allows you to control Homebrew simply by typing the `brew` command, complete with searching, outdated packages, etc. Very handy if you use [Homebrew](http://brew.sh) and want the tools at your fingertips via Alfred.
 
 ## Programming
 
