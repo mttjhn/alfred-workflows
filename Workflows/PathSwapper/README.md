@@ -13,4 +13,4 @@ This is a quick workflow to convert Mac paths to Windows paths and vice versa. F
     * The "volume mappings" are stored in a script in the workflow in a Javascript array. You have to edit those entries to something that makes sense for your common mounted network locations.
 
 ## Contributors
-- [@mttjhn](https://github.com/mttjn)
+- [@mttjhn](https://github.com/mttjhn)
