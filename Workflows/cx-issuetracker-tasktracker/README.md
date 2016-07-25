@@ -24,4 +24,4 @@ Example:
 
 
 ## Contributors
-- [@mttjhn](https://github.com/mttjn)
+- [@mttjhn](https://github.com/mttjhn)
