@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.mttjhn.pathswapper</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>10CB7C58-FB79-47B2-84FC-5E95D1D07220</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>93AA8237-D7DB-442F-A8DF-483A114010C6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>16176E3E-08FB-40E4-8E77-4527E8764688</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5B2048DF-F04F-44CF-B6D3-10C506A22E34</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5B2048DF-F04F-44CF-B6D3-10C506A22E34</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4F9EE2D5-182D-4540-8C1D-0CCC7037BCC1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5E90A7C5-C718-48FE-9D92-A4B4ED6E543B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>10CB7C58-FB79-47B2-84FC-5E95D1D07220</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>81DD73E2-BCEB-431E-BF03-0E65875A14D7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5E90A7C5-C718-48FE-9D92-A4B4ED6E543B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Matthew Johnson</string>
+	<key>description</key>
+	<string>A tool to swap Windows and Mac paths on the fly</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Path Swapper</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsmulti</key>
+				<false/>
+				<key>filetypes</key>
+				<array/>
+				<key>name</key>
+				<string>Paste Windows Path</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.action</string>
+			<key>uid</key>
+			<string>16176E3E-08FB-40E4-8E77-4527E8764688</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>function run(argv) {
+    var query = argv[0];
+    
+    // IMPORTANT SETUP: Change the below arrays to adjust your default paths!
+    knownVolumes = [
+        ['projects', '\\\\lindsey.cxusa.com\\projects'],
+        ['applications', '\\\\lindsey.cxusa.com\\applications'],
+        ['public', '\\\\lindsey.cxusa.com\\public']
+    ];
+
+    // Set output to the clipboard, just in case the logic fails
+    output = query;
+
+    if(query.trim().length &gt;= 3) {
+        tempClip = query.trim();
+        if (tempClip.substring(0, 1) === '/') {
+            // We likely have a copied Mac path!
+            volumeProcessed = false;
+            pathContents = tempClip.split('/');
+            // First, check if we have a /Volume/ (note that array begins with an empty result for some reason...)
+            if (pathContents.length &gt; 0 &amp;&amp; pathContents[1].toLowerCase().trim() === 'volumes') {
+                // We have a /Volumes/ path! Let's figure out what volume.
+                if (pathContents[2]) {
+                    windowsPath = searchVolumes(pathContents[2].trim());
+                    if (windowsPath) {
+                        //We got a windows path! Let's replace the Volumes stuff...
+                        output = searchReplace(tempClip, '/Volumes/' + pathContents[2], windowsPath);
+                        // And replace the rest of the slashes
+                        output = searchReplace(output, '/', '\\');
+                        volumeProcessed = true;
+                    }
+                }
+            }
+            // If we couldn't find anything, we'll just flip the slashes
+            if (!volumeProcessed) {
+                output = searchReplace(tempClip, '/', '\\');
+            }
+        }
+        else if(tempClip.substring(0, 3) === 'smb') {
+            output = searchReplace(tempClip, 'smb:', '');
+            output = searchReplace(output, '/', '\\');
+        }
+    }
+
+    return output;
+}
+
+// This function searches the knownVolumes collection for a volume with the given name and returns the Windows server-share
+function searchVolumes(searchName) {
+    // Searches the volumes collection and returns the Windows equivalent
+	for (var i = 0; i &lt; knownVolumes.length; i++) {
+        if (knownVolumes[i]) {
+		    match = knownVolumes[i];
+			if (match[0] &amp;&amp; match[0].toLowerCase() === searchName.toLowerCase()) {
+			    return match[1];
+			}
+		}
+    }
+}
+
+// This function replaces text
+function searchReplace(text, search, replace) {
+  replaced = text.split(search).join(replace);
+  return replaced;
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>5B2048DF-F04F-44CF-B6D3-10C506A22E34</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>4F9EE2D5-182D-4540-8C1D-0CCC7037BCC1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>pathswap-old</string>
+				<key>subtext</key>
+				<string>Swap the path of your current clipboard into the Mac/Windows equivalent, and paste in the active application</string>
+				<key>text</key>
+				<string>Path Swapper</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>81DD73E2-BCEB-431E-BF03-0E65875A14D7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+    return (the clipboard as text)
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>5E90A7C5-C718-48FE-9D92-A4B4ED6E543B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>function run(argv) {
+    var query = argv[0];
+    
+    // IMPORTANT SETUP: Change the below arrays to adjust your default paths!
+    knownVolumes = [
+        ['projects', '\\\\lindsey.cxusa.com\\projects'],
+        ['applications', '\\\\lindsey.cxusa.com\\applications'],
+        ['public', '\\\\lindsey.cxusa.com\\public']
+    ];
+
+    knownSources = [
+        ['\\\\lindsey.cxusa.com\\projects', 'projects'],
+        ['\\\\lindsey\\projects', 'projects'],
+        ['\\\\lindsey.cxusa.com\\applications', 'applications'],
+        ['\\\\lindsey\\applications', 'applications'],
+        ['\\\\lindsey.cxusa.com\\public', 'public'],
+        ['\\\\lindsey\\public', 'public']
+    ];
+
+    // Set output to the clipboard, just in case the logic fails
+    output = query;
+
+    if(query.trim().length &gt;= 3) {
+        tempClip = query.trim();
+        if (tempClip.substring(0, 1) === '\\') {
+            volumeProcessed = false;
+            // We likely have a windows path! Let's cross-reference it with our array above!
+            sourceXref = searchSources(tempClip);
+            if (sourceXref) {
+                // We found something! Good, let's replace it in our path.
+                output = searchReplace(tempClip.toLowerCase(), sourceXref[0].toLowerCase(), '/Volumes/' + sourceXref[1]);
+                // And replace the rest of the slashes
+                output = searchReplace(output, '\\', '/');
+                volumeProcessed = true;
+            }
+            
+            if (!volumeProcessed) {
+                output = searchReplace(tempClip, '\\', '/');
+            }
+            
+            // Note that we could make this much simpler and just do an SMB path, but we won't.
+            // output = 'smb:' + output;
+        }
+        else if (tempClip.substring(0, 1) === '/') {
+            // We likely have a copied Mac path!
+            volumeProcessed = false;
+            pathContents = tempClip.split('/');
+            // First, check if we have a /Volume/ (note that array begins with an empty result for some reason...)
+            if (pathContents.length &gt; 0 &amp;&amp; pathContents[1].toLowerCase().trim() === 'volumes') {
+                // We have a /Volumes/ path! Let's figure out what volume.
+                if (pathContents[2]) {
+                    windowsPath = searchVolumes(pathContents[2].trim());
+                    if (windowsPath) {
+                        //We got a windows path! Let's replace the Volumes stuff...
+                        output = searchReplace(tempClip, '/Volumes/' + pathContents[2], windowsPath);
+                        // And replace the rest of the slashes
+                        output = searchReplace(output, '/', '\\');
+                        volumeProcessed = true;
+                    }
+                }
+            }
+            // If we couldn't find anything, we'll just flip the slashes
+            if (!volumeProcessed) {
+                output = searchReplace(tempClip, '/', '\\');
+            }
+        }
+        else if(tempClip.substring(0, 3) === 'smb') {
+            output = searchReplace(tempClip, 'smb:', '');
+            output = searchReplace(output, '/', '\\');
+        }
+    }
+
+    return output;
+}
+
+// This function searches the knownVolumes collection for a volume with the given name and returns the Windows server-share
+function searchVolumes(searchName) {
+    // Searches the volumes collection and returns the Windows equivalent
+	for (var i = 0; i &lt; knownVolumes.length; i++) {
+        if (knownVolumes[i]) {
+		    match = knownVolumes[i];
+			if (match[0] &amp;&amp; match[0].toLowerCase() === searchName.toLowerCase()) {
+			    return match[1];
+			}
+		}
+    }
+}
+
+// This function searches the given path for a Windows server-share in the knownSources collection
+function searchSources(searchPath) {
+    // Searches the volumes collection for Windows paths and returns the Mac equivalent
+	for (var i = 0; i &lt; knownSources.length; i++) {
+        if (knownSources[i]) {
+		    match = knownSources[i];
+			if (match[0] &amp;&amp; searchPath.toLowerCase().indexOf(match[0].toLowerCase()) &gt;= 0) {
+			    return match;
+			}
+		}
+    }
+}
+
+// This function replaces text
+function searchReplace(text, search, replace) {
+  replaced = text.split(search).join(replace);
+  return replaced;
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>10CB7C58-FB79-47B2-84FC-5E95D1D07220</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>path</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.browseinalfred</string>
+			<key>uid</key>
+			<string>93AA8237-D7DB-442F-A8DF-483A114010C6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>pathswap</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Please wait...</string>
+				<key>script</key>
+				<string>python pathswapper.py</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Swap between Mac and UNC paths and stuff</string>
+				<key>title</key>
+				<string>Path Swapper</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>4923FF72-E480-43E0-8700-62AAF8BEB799</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>10CB7C58-FB79-47B2-84FC-5E95D1D07220</key>
+		<dict>
+			<key>note</key>
+			<string>Run script to parse file path into the appropriate value.</string>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>310</integer>
+		</dict>
+		<key>16176E3E-08FB-40E4-8E77-4527E8764688</key>
+		<dict>
+			<key>xpos</key>
+			<integer>70</integer>
+			<key>ypos</key>
+			<integer>30</integer>
+		</dict>
+		<key>4923FF72-E480-43E0-8700-62AAF8BEB799</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>420</integer>
+		</dict>
+		<key>4F9EE2D5-182D-4540-8C1D-0CCC7037BCC1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>690</integer>
+			<key>ypos</key>
+			<integer>90</integer>
+		</dict>
+		<key>5B2048DF-F04F-44CF-B6D3-10C506A22E34</key>
+		<dict>
+			<key>note</key>
+			<string>Run script to parse a Mac file path into the appropriate Windows value.</string>
+			<key>xpos</key>
+			<integer>350</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>5E90A7C5-C718-48FE-9D92-A4B4ED6E543B</key>
+		<dict>
+			<key>note</key>
+			<string>This script grabs text from the clipboard and passes it into the next action</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>290</integer>
+		</dict>
+		<key>81DD73E2-BCEB-431E-BF03-0E65875A14D7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>60</integer>
+			<key>ypos</key>
+			<integer>280</integer>
+		</dict>
+		<key>93AA8237-D7DB-442F-A8DF-483A114010C6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>670</integer>
+			<key>ypos</key>
+			<integer>330</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>www.mttjhn.com</string>
+</dict>
+</plist>
