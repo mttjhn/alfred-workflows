@@ -9,12 +9,8 @@ A quick way to search for Issues or Tasks in the Computronix IssueTracker or Tas
 
 ## Commands
 - `issue <number>`
-    * Accepts only number input, and this command searches the CXUSA IssueTracker site.
-- `issue-cx <number>`
     * Accepts only number input, and this command searches the Computronix IssueTracker site.
 - `task <number>`
-    * Accepts only number input, and this command searches the CXUSA TaskTracker site.
-- `task-cx <number>`
     * Accepts only number input, and this command searches the Computronix TaskTracker site.
 
 Example:
