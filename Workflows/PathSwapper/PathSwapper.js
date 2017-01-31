@@ -13,7 +13,7 @@ knownSources = [
     ['\\\\lindsey.cxusa.com\\projects', 'projects'],
     ['\\\\lindsey\\projects', 'projects'],
     ['\\\\lindsey.cxusa.com\\applications', 'applications'],
-    ['\\\\lindsey\\applications', 'applications'],
+    ['\\\\lindsey\\applications', 'applications']
     ['\\\\lindsey.cxusa.com\\public', 'public'],
     ['\\\\lindsey\\public', 'public']
 ];

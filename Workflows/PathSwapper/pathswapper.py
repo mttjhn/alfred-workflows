@@ -85,6 +85,10 @@ def main(wf):
         query = query.strip()
         optionsShown = False
         # Then, let's check the contents to see what we have
+        # Check first for file:// and flip it if needed
+        if query[:7] == 'file://':
+            query = flipBack(query.replace('file:', ''))
+        # Now, let's go through the contents!
         if query[:2] == '\\\\':
             # We likely have a windows path!
             # TODO: Add modifiers for copying instead of opening, etc.
