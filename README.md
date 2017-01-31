@@ -15,6 +15,10 @@ A listing of the Alfred workflows that I have collected for regular use, includi
 	* __Update:__ now that Apple has effectively "sherlocked" Command-C with their new [Universal Clipboard](http://appleinsider.com/articles/16/06/15/universal-clipboard-for-macos-sierra-ios-10-streamlines-copypaste-between-devices) feature in macOS Sierra, this will probably hit the trash bin soon.
 - [Homebrew & Cask](https://github.com/fniephaus/alfred-homebrew) (by [@fniephaus](https://github.com/fniephaus))
 	* Just discovered this excellent Alfred workflow that allows you to control Homebrew simply by typing the `brew` command, complete with searching, outdated packages, etc. Very handy if you use [Homebrew](http://brew.sh) and want the tools at your fingertips via Alfred.
+- [Path Swapper](https://github.com/mttjhn/alfred-workflows/tree/master/Workflows/PathSwapper) (by [@mttjhn](https://github.com/mttjhn))
+	* A handy workflow that attempts to convert between Windows UNC paths and "macOS-style" paths, to make life easier for both loading remote files from emails with UNC paths, and for writing emails to coworkers with Windows computers.
+- [Droplr Downloader](https://github.com/mttjhn/alfred-workflows/tree/master/Workflows/DroplrDownloader) (by [@mttjhn](https://github.com/mttjhn))
+	* I built this workflow to help automate the process of downloading a screenshot/screencast from Droplr. Handy for those times when you want to attach a file to an email, instead of inserting a Droplr link. In conjunction with a folder watched by [Hazel](https://www.noodlesoft.com), this makes it easy to get at my screenshots without cluttering the Downloads folder or my Desktop.
 
 ## Programming
 
