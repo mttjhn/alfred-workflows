@@ -3,6 +3,7 @@
 import sys
 import subprocess
 import os
+import urllib
 from workflow import Workflow3, ICON_NETWORK, ICON_HOME, ICON_WARNING, web
 
 log = None
@@ -14,6 +15,29 @@ def getClipboard():
     retcode = p.wait()
     data = p.stdout.read()
     return data
+
+def getNetworkFromMount(mountPath):
+    log.debug(mountPath)
+    df = subprocess.Popen(['df', mountPath], stdout = subprocess.PIPE)
+    outputLine = df.stdout.readlines()[1]
+    log.debug(outputLine)
+    uncPath = outputLine.split()[0]
+    # Remove the user login info from the front
+    serverPath = uncPath.split('@')[1].lower()
+    return serverPath
+
+def getMountFromNetwork(networkPath):
+    df = subprocess.Popen(['df', '-T', 'smbfs'], stdout = subprocess.PIPE)
+    for m in df.stdout.readlines():
+        # Skip the header line when parsing STDOUT
+        if not m.startswith('Filesystem'):
+            uncPath = m.split()[0]
+            mountLoc = m.split()[8]
+            serverPath = uncPath.split('@')[1].lower()
+            log.debug(serverPath)
+            log.debug(mountLoc)
+            if serverPath.lower() == networkPath.lower():
+                return mountLoc
 
 # This function converts Windows to SMB paths
 def convertToSmb(winPath):
@@ -28,7 +52,10 @@ def convertToVolume(winPath):
     splitPath = winPath[2:].split('\\')
     server = splitPath[0]
     share = splitPath[1]
-    mountPath = u'/Volumes/' + share
+    networkPath = server + '/' + share
+    log.debug(networkPath)
+    mountPath = getMountFromNetwork(networkPath)
+    #mountPath = u'/Volumes/' + share
 
     # Check to see if the path is mounted
     if os.path.exists(mountPath):
@@ -48,11 +75,17 @@ def convertToWindows(macPath):
     log.debug(mountLoc)
     replace = None
     output = None
-    for s in mountMap:
-        if s[0].lower() == share.lower():
-            log.debug('Found loc!')
-            replace = s[1]
-            log.debug(replace)
+    networkMnt = getNetworkFromMount(mountLoc + '/')
+    replace = networkMnt
+    # Let's see if we got anything
+    #if networkMnt:
+    #    replace = networkMnt
+    #else:
+    #    for s in mountMap:
+    #        if s[0].lower() == share.lower():
+    #            log.debug('Found loc!')
+    #            replace = s[1]
+    #            log.debug(replace)
     if replace != None:
         output = flipBack(u'\\\\' + macPath.replace(mountLoc, replace)) 
     return output
@@ -87,7 +120,10 @@ def main(wf):
         # Then, let's check the contents to see what we have
         # Check first for file:// and flip it if needed
         if query[:7] == 'file://':
+            log.debug('found file')
+            query = urllib.unquote(query).decode('utf8')
             query = flipBack(query.replace('file:', ''))
+            log.debug(query)
         # Now, let's go through the contents!
         if query[:2] == '\\\\':
             # We likely have a windows path!
@@ -162,12 +198,13 @@ if __name__ == u"__main__":
     wf = Workflow3()
     log = wf.logger
     # Set the collection of network locations
-    mountMap = wf.stored_data('mountMap')
-    if mountMap == None:
-        mountMap = [
-            ['projects', 'lindsey.cxusa.com\\projects'],
-            ['applications', 'lindsey.cxusa.com\\applications'],
-            ['public', 'lindsey.cxusa.com\\public'],
-        ]
-        wf.store_data('mountMap', mountMap)
+    #mountMap = wf.stored_data('mountMap')
+    #if mountMap == None:
+    #    mountMap = [
+    #        ['projects', 'denfiles.computronix.com\\projects'],
+    #        ['applications', 'denfiles.computronix.com\\applications'],
+    #        ['public', 'denfiles.computronix.com\\public'],
+    #        ['posse', 'genesis.computronix.com\\posse']
+    #    ]
+    #    wf.store_data('mountMap', mountMap)
     sys.exit(wf.run(main)) 
